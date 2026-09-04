@@ -2,7 +2,7 @@
 
 This repository provides a production-grade **GitOps Bootstrap Foundation** that automates central remote state storage and dynamic configuration discovery across multi-repository Terraform environments.
 
-
+---
 
 ## 🎯 What This Project Solves For Users
 
@@ -33,10 +33,10 @@ When managing infrastructure across multiple repositories (e.g., Bootstrap, Netw
   │  bootstrap/  │                │  network/    │                │  app/        │
   │  tfstate     │                │  tfstate     │                │  tfstate     │
   └──────────────┘                └──────────────┘                └──────────────┘
-text```
+
 
 ---
-📑 How To Use This Foundation in Your Infrastructure
+## 📑 How To Use This Foundation in Your Infrastructure
 ⚙️ Phase 1: Prerequisites & AWS Configuration
 1. Set Up GitHub Actions Secrets
 In your GitHub Repository, navigate to Settings $\rightarrow$ Secrets and variables $\rightarrow$ Actions and add:
