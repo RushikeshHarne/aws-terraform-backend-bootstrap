@@ -28,5 +28,7 @@ resource "aws_ssm_parameter" "state_bucket_name" {
   name        = "/terraform/remote_state_bucket"
   type        = "String"
   value       = module.state_backend.bucket_id
+  overwrite   = true  # overwrites 
   description = "S3 bucket name used for remote state storage"
+
 }
