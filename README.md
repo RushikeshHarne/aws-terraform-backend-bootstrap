@@ -68,11 +68,11 @@ variable "state_bucket_name" {
 
 2. Automated Pipeline Execution:
 
-  ### Account Identity Resolution: Retrieves your 12-digit AWS Account ID dynamically via data "aws_caller_identity" "current" {}.
+  Account Identity Resolution: Retrieves your 12-digit AWS Account ID dynamically via data "aws_caller_identity" "current" {}.
   
-  ### S3 Bucket Creation: Provisions the bucket rush-<ACCOUNT_ID>.
+  S3 Bucket Creation: Provisions the bucket rush-<ACCOUNT_ID>.
   
-  ### SSM Parameter Registration: Publishes the bucket name to /terraform/remote_state_bucket in AWS Systems Manager.
+  SSM Parameter Registration: Publishes the bucket name to /terraform/remote_state_bucket in AWS Systems Manager.
 
 
 ```text
@@ -138,10 +138,10 @@ Run terraform init and terraform apply in your downstream repository. Your .tfst
 ```
 ---
 
-# 🛡️ Teardown & Maintenance Lifecycle
-## 🧼 terraform destroy Safety: Running a teardown in Repo 1 removes ephemeral resources (SSM Parameter) while leaving the backend S3 bucket intact to protect state files from other repositories.
+## 🛡️ Teardown & Maintenance Lifecycle
+### 🧼 terraform destroy Safety: Running a teardown in Repo 1 removes ephemeral resources (SSM Parameter) while leaving the backend S3 bucket intact to protect state files from other repositories.
 
-## 🗑️ Full Bucket Decommissioning: To remove the backend storage bucket during lab/sandbox teardowns, execute:
+### 🗑️ Full Bucket Decommissioning: To remove the backend storage bucket during lab/sandbox teardowns, execute:
 
 ```text
 ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
