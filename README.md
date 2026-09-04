@@ -14,10 +14,9 @@ When managing infrastructure across multiple repositories (e.g., Bootstrap, Netw
 * 🛡️ **Safety from Accidental Deletion:** The core S3 bucket is decoupled from standard `terraform destroy` cycles, preventing state wipeouts during infrastructure teardowns.
 
 ---
-
 ## 🏗️ Architecture Overview
 
-```text
+
                            ┌───────────────────────────┐
                            │   CENTRAL S3 BUCKET       │
                            │   rush-<ACCOUNT_ID>       │
@@ -34,14 +33,18 @@ When managing infrastructure across multiple repositories (e.g., Bootstrap, Netw
   │  tfstate     │                │  tfstate     │                │  tfstate     │
   └──────────────┘                └──────────────┘                └──────────────┘
 
-'''
-
+---
 ## 📑 How To Use This Foundation in Your Infrastructure
+---
 ⚙️ Phase 1: Prerequisites & AWS Configuration
 1. Set Up GitHub Actions Secrets
 In your GitHub Repository, navigate to Settings $\rightarrow$ Secrets and variables $\rightarrow$ Actions and add:
 AWS_ACCESS_KEY_ID: IAM user/role access key.
 AWS_SECRET_ACCESS_KEY: IAM user/role secret key.
+
+
+
+
 
 2. Configure Local Variables (Optional)
 In variables.tf, customize your base bucket prefix and target region:
