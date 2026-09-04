@@ -5,7 +5,7 @@ provider "aws" {
 # 1. Call Reusable Remote Backend Module
 
 module "state_backend" {
-  source      = "./modules/remote_backend"
+  source      = "./Modules/remote_backend"
   bucket_name = var.state_bucket_name
 }
 
