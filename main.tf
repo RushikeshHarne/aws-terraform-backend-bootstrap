@@ -2,17 +2,13 @@ provider "aws" {
   region = var.aws_region
 }
 
-resource "random_string" "suffix" {
-  length  = 6
-  special = false
-  upper   = false
-}
+data "aws_caller_identity" "current" {}
 
 # 1. Call Reusable Remote Backend Module
 
 module "state_backend" {
   source      = "./Modules/remote_backend"
-  bucket_name = "${var.state_bucket_name}-${var.environment}-${random_string.suffix.result}"
+  bucket_name = "${var.state_bucket_name}-${data.aws_caller_identity.current.account_id}"
 }
 
 # 2. Store Bucket Name in SSM Parameter Store for Repository 2 to fetch automatically
