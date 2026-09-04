@@ -6,6 +6,6 @@ variable "aws_region" {
 
 variable "state_bucket_name" {
   type        = string
-  default     = "rush-my-tf-test-bucket-2026" # Ensure this is globally unique across AWS
+  default     = "rush" # Ensure this is globally unique across AWS
   description = "Globally unique S3 bucket name for state storage"
 }
