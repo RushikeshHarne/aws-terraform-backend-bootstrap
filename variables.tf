@@ -4,6 +4,11 @@ variable "aws_region" {
   description = "AWS Region to deploy backend resources"
 }
 
+variable "environment" {
+  type       = string
+  default    = "dev"
+}
+
 variable "state_bucket_name" {
   type        = string
   default     = "rush" # Ensure this is globally unique across AWS
