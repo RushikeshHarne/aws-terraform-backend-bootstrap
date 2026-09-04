@@ -1,4 +1,4 @@
-# 🚀 GitHub Actions Multi-Repo GitOps Foundation (Repo 1)
+# 🚀 GitHub Actions Multi-Repo GitOps Foundation 
 
 This repository serves as the core **Bootstrap Foundation** for a multi-repository Terraform environment. It establishes a centralized, persistent Amazon S3 remote backend and publishes configuration pointers via AWS SSM Parameter Store for downstream infrastructure repositories (e.g., Network, App Stack).
 
