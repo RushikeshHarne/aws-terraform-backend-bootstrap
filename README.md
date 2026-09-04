@@ -2,7 +2,7 @@
 
 This repository provides a production-grade **GitOps Bootstrap Foundation** that automates central remote state storage and dynamic configuration discovery across multi-repository Terraform environments.
 
----
+
 
 ## 🎯 What This Project Solves For Users
 
