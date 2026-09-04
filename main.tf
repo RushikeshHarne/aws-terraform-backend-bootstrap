@@ -8,15 +8,6 @@ terraform {
     }
   }
 
-  # Remote backend configuration for storing the bootstrap state itself
-  backend "s3" {
-    bucket  = "${var.state_bucket_name}-${data.aws_caller_identity.current.account_id}" # Replace with your AWS Account ID
-    key     = "bootstrap/terraform.tfstate"
-    region  = "us-east-1"
-    encrypt = true
-  }
-}
-
 provider "aws" {
   region = var.aws_region
 }
