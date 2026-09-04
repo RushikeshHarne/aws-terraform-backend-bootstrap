@@ -55,3 +55,79 @@ variable "state_bucket_name" {
   default = "rush" # Evaluates to: rush-<YOUR_AWS_ACCOUNT_ID>
 }
 
+🚀 Phase 2: Deploying the Bootstrap Engine
+1. Push to Main: Push your changes to the main branch to trigger the automated deployment workflow .github/workflows/deploy-backend.yml.
+
+2. Automated Pipeline Execution:
+
+  Account Identity Resolution: Retrieves your 12-digit AWS Account ID dynamically via data "aws_caller_identity" "current" {}.
+
+  S3 Bucket Creation: Provisions the bucket rush-<ACCOUNT_ID>.
+  
+  SSM Parameter Registration: Publishes the bucket name to /terraform/remote_state_bucket in AWS Systems Manager.
+
+  # Optional: Deploy locally via CLI
+  terraform init
+  terraform plan
+  terraform apply -auto-approve
+
+🔗 Phase 3: Integrating Downstream Repositories (Repo 2 / Repo 3)
+Once Repo 1 completes execution, use the provisioned bucket in your downstream repositories (such as Network or Application repos).
+
+Step 1: Update backend.tf in Repo 2 / Repo 3
+Configure the backend block using the generated central bucket name and a unique key path:
+
+terraform {
+  required_version = ">= 1.10.0"
+
+  backend "s3" {
+    bucket       = "rush-123456789012" # Generated S3 Bucket Name
+    key          = "network/terraform.tfstate" # Unique path for this repo
+    region       = "us-east-1"
+    encrypt      = true
+    use_lockfile = true                # Native S3 state locking (No DynamoDB required)
+  }
+}
+
+Step 2: Fetch Configuration via SSM Parameter (Optional)
+Query the central SSM parameter in your downstream Terraform code to reference cross-repo outputs dynamically:
+
+data "aws_ssm_parameter" "state_bucket" {
+  name = "/terraform/remote_state_bucket"
+}
+
+output "remote_bucket_in_use" {
+  value = data.aws_ssm_parameter.state_bucket.value
+}
+
+Step 3: Apply Infrastructure
+Run terraform init and terraform apply in your downstream repository. Your .tfstate file is now safely stored centrally with native S3 locking enabled!
+
+📂 Repository Structure
+.
+├── 📁 .github/
+│   └── 📁 workflows/
+│       └── 📄 deploy.yml            # Automated CI/CD deployment pipeline
+├── 📁 Modules/
+│   └── 📁 remote_backend/           # Module defining S3 bucket specs
+├── 📄 main.tf                       # Core logic & SSM Parameter definition
+├── 📄 variables.tf                  # Input variables & region defaults
+└── 📄 outputs.tf                    # Bucket ID & SSM Parameter path outputs
+
+🛡️ Teardown & Maintenance Lifecycle
+🧼 terraform destroy Safety: Running a teardown in Repo 1 removes ephemeral resources (SSM Parameter) while leaving the backend S3 bucket intact to protect state files from other repositories.
+
+🗑️ Full Bucket Decommissioning: To remove the backend storage bucket during lab/sandbox tear downs, execute:
+
+ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+BUCKET_NAME="rush-${ACCOUNT_ID}"
+
+# Wipe object versions & delete markers
+aws s3api delete-objects --bucket "$BUCKET_NAME" \
+  --delete "$(aws s3api list-object-versions --bucket "$BUCKET_NAME" --query '{Objects: Versions[].{Key:Key,VersionId:VersionId}}' --output json)" 2>/dev/null || true
+
+aws s3api delete-objects --bucket "$BUCKET_NAME" \
+  --delete "$(aws s3api list-object-versions --bucket "$BUCKET_NAME" --query '{Objects: DeleteMarkers[].{Key:Key,VersionId:VersionId}}' --output json)" 2>/dev/null || true
+
+# Force remove empty bucket
+aws s3 rb "s3://${BUCKET_NAME}" --force
