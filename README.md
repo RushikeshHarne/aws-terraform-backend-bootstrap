@@ -15,7 +15,7 @@ When managing infrastructure across multiple repositories (e.g., Bootstrap, Netw
 
 ---
 ## 🏗️ Architecture Overview
-
+'''text
 
                            ┌───────────────────────────┐
                            │   CENTRAL S3 BUCKET       │
@@ -33,9 +33,10 @@ When managing infrastructure across multiple repositories (e.g., Bootstrap, Netw
   │  tfstate     │                │  tfstate     │                │  tfstate     │
   └──────────────┘                └──────────────┘                └──────────────┘
 
+
 ---
 ## 📑 How To Use This Foundation in Your Infrastructure
----
+
 ⚙️ Phase 1: Prerequisites & AWS Configuration
 1. Set Up GitHub Actions Secrets
 In your GitHub Repository, navigate to Settings $\rightarrow$ Secrets and variables $\rightarrow$ Actions and add:
