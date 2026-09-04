@@ -34,8 +34,8 @@ When managing infrastructure across multiple repositories (e.g., Bootstrap, Netw
   └──────────────┘                └──────────────┘                └──────────────┘
 ```
 ---
-#📑 How To Use This Foundation in Your Infrastructure
-##⚙️ Phase 1: Prerequisites & AWS Configuration
+# 📑 How To Use This Foundation in Your Infrastructure
+## ⚙️ Phase 1: Prerequisites & AWS Configuration
 
 1. Set Up GitHub Actions Secrets
 In your GitHub Repository, navigate to Settings -> Secrets and variables -> Actions and add:
@@ -61,7 +61,7 @@ variable "state_bucket_name" {
 ```
 
 ---
-#🚀 Phase 2: Deploying the Bootstrap Engine
+## 🚀 Phase 2: Deploying the Bootstrap Engine
 Push to Main: Push your changes to the main branch to trigger the automated deployment workflow .github/workflows/deploy.yml.
 
 Automated Pipeline Execution:
@@ -81,10 +81,11 @@ terraform apply -auto-approve
 ```
 
 ---
-#🔗 Phase 3: Integrating Downstream Repositories (Repo 2 / Repo 3)
+
+## 🔗 Phase 3: Integrating Downstream Repositories (Repo 2 / Repo 3)
 Once Repo 1 completes execution, use the provisioned bucket in your downstream repositories (such as Network or Application repos).
 
-##Step 1: Update backend.tf in Repo 2 / Repo 3
+### Step 1: Update backend.tf in Repo 2 / Repo 3
 Configure the backend block using the generated central bucket name and a unique key path:
 
 ```text
@@ -101,7 +102,8 @@ terraform {
 }
 ```
 ---
-##Step 2: Fetch Configuration via SSM Parameter (Optional)
+
+### Step 2: Fetch Configuration via SSM Parameter (Optional)
 Query the central SSM parameter in your downstream Terraform code to reference cross-repo outputs dynamically:
 
 ```text
@@ -114,8 +116,10 @@ output "remote_bucket_in_use" {
 }
 ```
 ---
-##Step 3: Apply Infrastructure
+
+### Step 3: Apply Infrastructure
 Run terraform init and terraform apply in your downstream repository. Your .tfstate file is now safely stored centrally with native S3 locking enabled!
+
 
 #📂 Repository Structure
 
@@ -131,10 +135,11 @@ Run terraform init and terraform apply in your downstream repository. Your .tfst
 └── 📄 outputs.tf                    # Bucket ID & SSM Parameter path outputs
 ```
 ---
-#🛡️ Teardown & Maintenance Lifecycle
-##🧼 terraform destroy Safety: Running a teardown in Repo 1 removes ephemeral resources (SSM Parameter) while leaving the backend S3 bucket intact to protect state files from other repositories.
 
-##🗑️ Full Bucket Decommissioning: To remove the backend storage bucket during lab/sandbox teardowns, execute:
+# 🛡️ Teardown & Maintenance Lifecycle
+## 🧼 terraform destroy Safety: Running a teardown in Repo 1 removes ephemeral resources (SSM Parameter) while leaving the backend S3 bucket intact to protect state files from other repositories.
+
+## 🗑️ Full Bucket Decommissioning: To remove the backend storage bucket during lab/sandbox teardowns, execute:
 
 ```text
 ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
