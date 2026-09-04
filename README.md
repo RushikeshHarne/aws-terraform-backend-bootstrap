@@ -33,8 +33,9 @@ When managing infrastructure across multiple repositories (e.g., Bootstrap, Netw
   │  bootstrap/  │                │  network/    │                │  app/        │
   │  tfstate     │                │  tfstate     │                │  tfstate     │
   └──────────────┘                └──────────────┘                └──────────────┘
+text```
 
-
+---
 📑 How To Use This Foundation in Your Infrastructure
 ⚙️ Phase 1: Prerequisites & AWS Configuration
 1. Set Up GitHub Actions Secrets
