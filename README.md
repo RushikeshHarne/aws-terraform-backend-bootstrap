@@ -37,7 +37,7 @@ When managing infrastructure across multiple repositories (e.g., Bootstrap, Netw
 # 📑 How To Use This Foundation in Your Infrastructure
 ## ⚙️ Phase 1: Prerequisites & AWS Configuration
 
-  1. Set Up GitHub Actions Secrets
+1. Set Up GitHub Actions Secrets
      
   In your GitHub Repository, navigate to Settings -> Secrets and variables -> Actions and add:
 
@@ -47,7 +47,8 @@ When managing infrastructure across multiple repositories (e.g., Bootstrap, Netw
 
 ---
 2. Configure Local Variables (Optional)
-In variables.tf, customize your base bucket prefix and target region:
+   
+  In variables.tf, customize your base bucket prefix and target region:
 
 ```text
 variable "aws_region" {
