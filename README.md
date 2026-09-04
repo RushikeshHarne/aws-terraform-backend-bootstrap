@@ -64,15 +64,15 @@ variable "state_bucket_name" {
 
 ---
 ## 🚀 Phase 2: Deploying the Bootstrap Engine
-Push to Main: Push your changes to the main branch to trigger the automated deployment workflow .github/workflows/deploy.yml.
+1. Push to Main: Push your changes to the main branch to trigger the automated deployment workflow .github/workflows/deploy.yml.
 
-Automated Pipeline Execution:
+2. Automated Pipeline Execution:
 
-  Account Identity Resolution: Retrieves your 12-digit AWS Account ID dynamically via data "aws_caller_identity" "current" {}.
+  ### Account Identity Resolution: Retrieves your 12-digit AWS Account ID dynamically via data "aws_caller_identity" "current" {}.
   
-  S3 Bucket Creation: Provisions the bucket rush-<ACCOUNT_ID>.
+  ### S3 Bucket Creation: Provisions the bucket rush-<ACCOUNT_ID>.
   
-  SSM Parameter Registration: Publishes the bucket name to /terraform/remote_state_bucket in AWS Systems Manager.
+  ### SSM Parameter Registration: Publishes the bucket name to /terraform/remote_state_bucket in AWS Systems Manager.
 
 
 ```text
