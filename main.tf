@@ -22,7 +22,7 @@ module "state_backend" {
   bucket_name = "${var.state_bucket_name}-${data.aws_caller_identity.current.account_id}"
 }
 
-# 2. Store Bucket Name in SSM Parameter Store for Repository 2 to fetch automatically
+# 2. Store Bucket Name in SSM Parameter Store for Repository 2 to fetch automatically.
 
 resource "aws_ssm_parameter" "state_bucket_name" {
   name        = "/terraform/remote_state_bucket"
