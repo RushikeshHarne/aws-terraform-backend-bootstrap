@@ -157,3 +157,10 @@ aws s3api delete-objects --bucket "$BUCKET_NAME" \
 # Force remove empty bucket
 aws s3 rb "s3://${BUCKET_NAME}" --force
 ```
+
+
+## 🔗 Related Repositories
+---
+If you'd like to test this setup end-to-end, try combining it with the network layer configuration:
+
+* 🌐 **Network Infrastructure:** [network-tier](https://github.com/RushikeshHarne/aws-terraform-backend-bootstrap.git) — Infrastructure provisioner for core network resources (VPC, Subnets, IGW).
